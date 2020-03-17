@@ -20,7 +20,7 @@ const RootQueryType = new GraphQLObjectType({
         }
       },
       resolve: (obj, args, { pgPool }) => {
-        return pgdb(pgPool).getUser(args.key);
+        return pgdb(pgPool).getUserByApiKey(args.key);
       }
     }
   }
