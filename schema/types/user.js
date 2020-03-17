@@ -25,8 +25,8 @@ module.exports = new GraphQLObjectType({
     createdAt: { type: GraphQLString },
     contests: {
       type: new GraphQLList(ContestType),
-      resolve(obj, args, { pgPool }) {
-        return pgdb(pgPool).getContests(obj);
+      resolve(obj, args, { loaders }) {
+        return loaders.contestsForUserIds.load(obj.id);
       }
     },
     contestsCount: {
