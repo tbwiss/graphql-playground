@@ -5,6 +5,8 @@ const {
   GraphQLString
 } = require ('graphql');
 
+const TotalVotes = require('./total-votes');
+
 module.exports = new GraphQLObjectType({
   name: 'NameType',
 
@@ -20,6 +22,12 @@ module.exports = new GraphQLObjectType({
         type: UserType,
         resolve: (obj, args, { loaders }) => {
           return loaders.usersByIds.load(obj.createdBy);
+        }
+      },
+      totalVotes: {
+        type: TotalVotes,
+        resolve: (obj, args, { loaders }) => {
+          return loaders.totalVotesByNameIds.load(obj.id);
         }
       }
     }
