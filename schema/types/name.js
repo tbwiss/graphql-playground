@@ -8,7 +8,7 @@ const {
 const TotalVotes = require('./total-votes');
 
 module.exports = new GraphQLObjectType({
-  name: 'NameType',
+  name: 'Name',
 
   fields: () => {
     const UserType = require('./user');
