@@ -73,6 +73,27 @@ module.exports = pgPool => {
       });
     },
 
+    getActivitesForUserIds(userIds) {
+      return pgPool.query(`
+          select created_by, created_at, label, '' as title,
+                'name' as activity_type
+          from names
+          where created_by = ANY($1)
+          union
+          select created_by, created_at, '' as label, title,
+                'contest' as activity_type
+          from contests
+          where created_by = ANY($1)
+      `, [userIds]).then(res => {
+        return orderedFor({
+          rows: res.rows, 
+          collection: userIds,
+          field: 'createdBy',
+          singleObject: false
+        })
+      });
+    },
+
     addNewContest({ apiKey, title, description }) {
       return pgPool.query(`
         insert into contests(code, title, description, created_by)

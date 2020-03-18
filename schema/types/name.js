@@ -5,13 +5,12 @@ const {
   GraphQLString
 } = require ('graphql');
 
-const TotalVotes = require('./total-votes');
-
 module.exports = new GraphQLObjectType({
   name: 'Name',
 
   fields: () => {
     const UserType = require('./user');
+    const TotalVotes = require('./total-votes');
 
     return {
       id: { type: GraphQLID },
